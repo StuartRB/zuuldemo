@@ -3,8 +3,16 @@ package io.stuart.zuuldemo.filters
 import com.netflix.zuul.ZuulFilter
 import com.netflix.zuul.context.RequestContext
 import com.netflix.zuul.exception.ZuulException
+import io.stuart.zuuldemo.config.FilterProperties
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 
-class ZuulHeaderFilter extends ZuulFilter{
+class RequestUuidHeaderFilter extends ZuulFilter {
+
+    @Autowired
+    FilterProperties filterProperties
+
+
     @Override
     String filterType() {
         return "pre"
@@ -17,13 +25,13 @@ class ZuulHeaderFilter extends ZuulFilter{
 
     @Override
     boolean shouldFilter() {
-        return true
+        return filterProperties.getEnabled()
     }
 
     @Override
     Object run() throws ZuulException {
         RequestContext context = RequestContext.getCurrentContext()
-        context.addZuulRequestHeader("Via", "cts.proxy")
+        context.addZuulRequestHeader("X-Request-ID", UUID.randomUUID().toString())
         return null
     }
 }

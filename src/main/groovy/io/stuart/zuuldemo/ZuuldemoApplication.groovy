@@ -1,6 +1,7 @@
 package io.stuart.zuuldemo
 
-import io.stuart.zuuldemo.filters.ZuulHeaderFilter
+import io.stuart.zuuldemo.filters.RequestUuidHeaderFilter
+import io.stuart.zuuldemo.filters.GatewayViaHeaderFilter
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy
@@ -15,7 +16,12 @@ class ZuuldemoApplication {
 	}
 
     @Bean
-    ZuulHeaderFilter getZuulHeaderFilter(){
-        return new ZuulHeaderFilter();
+    GatewayViaHeaderFilter getZuulHeaderFilter(){
+        return new GatewayViaHeaderFilter()
+    }
+
+    @Bean
+    RequestUuidHeaderFilter guidFilter(){
+        return new RequestUuidHeaderFilter()
     }
 }

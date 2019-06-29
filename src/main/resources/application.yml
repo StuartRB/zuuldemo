@@ -1,9 +1,12 @@
 server:
   port: 8081
 zuul:
+  filters:
+    requestuuidheader:
+      enabled: true
   routes:
     serviceSimple:
-      path: /ass/**
+      path: /passthru/**
       url: http://localhost:3000/headers
   ratelimit:
     enabled: true
@@ -14,6 +17,7 @@ zuul:
         refresh-interval: 60
         type:
         - origin
+
 spring:
   jpa:
     generate-ddl: true
