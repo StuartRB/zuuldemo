@@ -3,8 +3,13 @@ package io.stuart.zuuldemo.filters
 import com.netflix.zuul.ZuulFilter
 import com.netflix.zuul.context.RequestContext
 import com.netflix.zuul.exception.ZuulException
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 
-class GatewayViaHeaderFilter extends ZuulFilter{
+class PreLoggingFilter extends ZuulFilter {
+
+    private static Logger logger = LogManager.getLogger(PreLoggingFilter.class)
+
     @Override
     String filterType() {
         return "pre"
@@ -12,7 +17,7 @@ class GatewayViaHeaderFilter extends ZuulFilter{
 
     @Override
     int filterOrder() {
-        return 2
+        return 1
     }
 
     @Override
@@ -23,7 +28,7 @@ class GatewayViaHeaderFilter extends ZuulFilter{
     @Override
     Object run() throws ZuulException {
         RequestContext context = RequestContext.getCurrentContext()
-        context.addZuulRequestHeader("Via", "cts.proxy")
+        logger.info("Request received: " + context.getZuulRequestHeaders().get("x-request-id"))
         return null
     }
 }

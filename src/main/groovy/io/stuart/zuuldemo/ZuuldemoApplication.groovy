@@ -1,5 +1,6 @@
 package io.stuart.zuuldemo
 
+import io.stuart.zuuldemo.filters.PreLoggingFilter
 import io.stuart.zuuldemo.filters.RequestUuidHeaderFilter
 import io.stuart.zuuldemo.filters.GatewayViaHeaderFilter
 import org.springframework.boot.SpringApplication
@@ -23,5 +24,10 @@ class ZuuldemoApplication {
     @Bean
     RequestUuidHeaderFilter guidFilter(){
         return new RequestUuidHeaderFilter()
+    }
+
+    @Bean
+    PreLoggingFilter preLoggingFilter(){
+        return new PreLoggingFilter()
     }
 }
