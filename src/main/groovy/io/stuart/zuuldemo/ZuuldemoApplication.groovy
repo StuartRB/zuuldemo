@@ -1,5 +1,6 @@
 package io.stuart.zuuldemo
 
+import io.stuart.zuuldemo.filters.PostLoggingFilter
 import io.stuart.zuuldemo.filters.PreLoggingFilter
 import io.stuart.zuuldemo.filters.RequestUuidHeaderFilter
 import io.stuart.zuuldemo.filters.GatewayViaHeaderFilter
@@ -29,5 +30,10 @@ class ZuuldemoApplication {
     @Bean
     PreLoggingFilter preLoggingFilter(){
         return new PreLoggingFilter()
+    }
+
+    @Bean
+    PostLoggingFilter postLoggingFilter(){
+        return new PostLoggingFilter()
     }
 }
